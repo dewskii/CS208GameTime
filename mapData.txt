@@ -1,0 +1,5 @@
+TRUE D2 src/maps/D2.jpg null D1 D3 C2
+FALSE D1 src/maps/D1.jpg null null D2 null
+FALSE D3 src/maps/D3.jpg null D2 null null
+FALSE C2 src/maps/C2.jpg D2 null C3 null
+FALSE C3 src/maps/C3.jpg D3 C2 null null
