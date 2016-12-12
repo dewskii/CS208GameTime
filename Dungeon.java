@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -18,20 +19,23 @@ public class Dungeon {
 	Room currentRoom;
 	HashMap<String,Room> roomHash;
 	GridPane grid;
-	Player player;
+	ArrayList<Player> players;
+	Player currentPlayer;
 	
 	public Dungeon(){
 		roomHash = new HashMap<String,Room>();
-		initialize();
-		currentRoom = roomHash.get("START");
-		player = new Player("Player1",currentRoom.getName());
-		
+		initialize();	
+		currentRoom = roomHash.get("0,0");
 	}
 	
 	public void changeRoom(Door door){
-		currentRoom = roomHash.get(door.name());
-		player.changeRoom(currentRoom.getName());
+		currentRoom = roomHash.get(door.getName());
+		currentPlayer.changeRoom(currentRoom.getName());
 		
+	}
+	
+	public Player getCurrentPlayer(){
+		return currentPlayer;
 	}
 	
 	public Room getCurrentRoom(){
@@ -45,25 +49,28 @@ public class Dungeon {
 	//initializes rooms from text file, doors point to available rooms
 	
 	public void initialize(){
+		System.out.println("INITIALIZE");
 		Room tempRoom;
 		Door[] door = new Door[4];
 		int row = 4;
 		int col = 4;
 		for(int i = 0; i<row; i++){
 			for(int j = 0; j<col; j++){
+				int r = i;
+				int c = j;
 				tempRoom = new Room(i+","+j);
+				door[0] = new Door((r+1)+","+(c));
+				door[1] = new Door((r)+","+(c-1));
+				door[2] = new Door((r)+","+(c+1));
+				door[3] = new Door((r-1)+","+(c));
+				tempRoom.setDoors(door);
 				roomHash.put(tempRoom.getName(), tempRoom);
-				for(int k = 0; k<door.length; k++){
-					if( i-1 > 0 
-				}
+			}						
+	   }
+  }
 				
-			}
-			
-		}
 		
-		
-		
-	}
+	
 	
 	public GridPane getGrid(){
 		return grid;

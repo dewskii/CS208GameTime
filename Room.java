@@ -34,6 +34,11 @@ public class Room {
   }//indices indicate position of doors [bottom,left,right,top]
  
   public void setDoors(Door[] doors){
+	for(Door d: doors){
+		String[] raw = d.getName().split(",");
+		if(Integer.parseInt(raw[0]) < 0 || Integer.parseInt(raw[1]) < 0)
+			d.setName(null);
+	}
     doorsHash.put("BOTTOM", doors[0]);
     doorsHash.put("LEFT", doors[1]);
     doorsHash.put("RIGHT", doors[2]);

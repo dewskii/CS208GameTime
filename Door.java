@@ -12,7 +12,12 @@ public class Door {
 		this.roomID = roomID;
 		
 	}
-	public String name() {
+	
+	public String setName(String name){
+		return roomID = name;
+	}
+	
+	public String getName() {
 		return roomID;
 	}
 	
