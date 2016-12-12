@@ -41,7 +41,7 @@ public class Room {
   public void setDoors(Door[] doors){
 	for(Door d: doors){
 		String[] raw = d.getName().split(",");
-		if(Integer.parseInt(raw[0]) < 0 || Integer.parseInt(raw[1]) < 0)
+		if(Integer.parseInt(raw[0]) < 0 || Integer.parseInt(raw[1]) < 0 || Integer.parseInt(raw[0]) > 8 || Integer.parseInt(raw[1]) > 8)
 			d.setName(null);
 	}
     doorsHash.put("BOTTOM", doors[0]);
