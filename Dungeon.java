@@ -12,25 +12,36 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 //creates dungeon of rooms on a A-F,1-6 Grid
 //Still need to determine how to "load" in preset map
 public class Dungeon {
+	final double HEIGHT = 350;
+	final double WIDTH = 350;
 	Room currentRoom;
 	HashMap<String,Room> roomHash;
 	GridPane grid;
 	ArrayList<Player> players;
 	Player currentPlayer;
+	Chaser player1;
+	Runner player2;
+	Runner player3;
+
 	
 	public Dungeon(){
 		roomHash = new HashMap<String,Room>();
-		initialize();	
-		currentRoom = roomHash.get("0,0");
+		grid = new GridPane();
+		player1 = new Chaser("Player1");
+		player2 = new Runner("Player2");
+		player3 = new Runner("Player3");
 	}
 	
 	public void changeRoom(Door door){
+		currentRoom.removePlayer(currentPlayer);
 		currentRoom = roomHash.get(door.getName());
-		currentPlayer.changeRoom(currentRoom.getName());
+		currentRoom.addPlayer(currentPlayer);
 		
 	}
 	
@@ -52,8 +63,8 @@ public class Dungeon {
 		System.out.println("INITIALIZE");
 		Room tempRoom;
 		Door[] door = new Door[4];
-		int row = 4;
-		int col = 4;
+		int row = 9;
+		int col = 9;
 		for(int i = 0; i<row; i++){
 			for(int j = 0; j<col; j++){
 				int r = i;
@@ -65,8 +76,14 @@ public class Dungeon {
 				door[3] = new Door((r-1)+","+(c));
 				tempRoom.setDoors(door);
 				roomHash.put(tempRoom.getName(), tempRoom);
+				tempRoom.setRoom(WIDTH/row, HEIGHT/col);
+				grid.add(tempRoom.getRoomShape(), c, r);
 			}						
 	   }
+		currentRoom = roomHash.get((int)Math.floor(Math.random()*8)+","+(int)Math.floor(Math.random()*8));
+		currentPlayer = player1;
+		currentRoom.addPlayer(player1);
+		
   }
 				
 		

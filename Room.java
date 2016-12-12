@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Room {
   /*attributes*/
@@ -20,8 +21,11 @@ public class Room {
  
   private ArrayList<Player> players;
   
+  private Rectangle roomRec;
+  
   public Room(){
     roomName = null;
+    roomRec = new Rectangle();
 
   }
  
@@ -30,6 +34,7 @@ public class Room {
     this.roomName = roomName;
     this.doorsHash = new HashMap<String,Door>();
     players = new ArrayList<Player>();
+    roomRec = new Rectangle();
    
   }//indices indicate position of doors [bottom,left,right,top]
  
@@ -52,9 +57,11 @@ public class Room {
   public String getAvalibleDoors(){
     String dr = "";
     for(Map.Entry<String, Door> entry : doorsHash.entrySet()){
+    if(entry.getValue().toString() != null){
       String key = entry.getKey();
       String door = entry.getValue().toString();
       dr+=key+": "+door+"\n";
+    }
     }
     return dr;
   }
@@ -62,15 +69,44 @@ public class Room {
   public String getName(){
     return roomName;
   }
+  
+  public Rectangle getRoomShape(){
+	  return roomRec;
+  }
  
+  public void setRoom(){
+	  if( players.size() == 0)
+		  roomRec.setFill(Color.WHITE);
+	  else{
+		  for(Player p: players){
+			  if(p.getClass().getName().equals("Chaser"))
+				  roomRec.setFill(Color.RED);
+			  if(p.getClass().getName().equals("Runner"))
+				  roomRec.setFill(Color.DEEPSKYBLUE);
+		  }
+	  }
+	  
+  }
+  public void setRoom(double width, double height){
+	  roomRec.setWidth(width);
+	  roomRec.setHeight(height);
+	  setRoom();
+  }
  
 
   public void addPlayer(Player p){
     players.add(p);
+    setRoom();
+  }
+  
+  public void removePlayer(Player p){
+	  players.remove(p);
+	  setRoom();
   }
   
   public void removePlayer(){
     players.remove(0);
+    setRoom();
   }
   
   public Player getPlayer(){
