@@ -28,7 +28,8 @@ public class Dungeon {
   for(int i = 0; i<rowNum; i++){
    for(int j = 0; j<colNum; j++){
     tempRoom = new Room(i+","+j);
-    roomHash.put((i+","+j), new Room(i+","+j));
+    tempRoom.setDoors(colNum, rowNum);
+    roomHash.put((i+","+j),tempRoom);
    }
   }
   currentRoom = roomHash.get("1,1");
@@ -37,8 +38,10 @@ public class Dungeon {
  }
  
  public void changeRoom(String key){
-  String newRoom = currentRoom.getDoor(key).name();
-  currentRoom = roomHash.get(newRoom);
+  String newRoom;
+  if (currentRoom.getDoorMap().containsKey(key)){
+    newRoom = currentRoom.getDoor(key).name();
+    currentRoom = roomHash.get(newRoom);}
   //player.changeRoom(currentRoom.getName());
   
  }

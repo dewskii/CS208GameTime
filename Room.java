@@ -35,29 +35,36 @@ public class Room {
     row = Integer.parseInt(token[1]);
     this.doorsHash = new HashMap<String,Door>();
     players = new ArrayList<Player>();
-    setDoors();
+    //setDoors();
    
   }//indices indicate position of doors [bottom,left,right,top]
  
- public void setDoors(){
+ public void setDoors(int maxCol, int maxRow){
     Door[] doors = new Door[4];
-    doors[0] = new Door(col+","+(row+1));
-    doorsHash.put("BOTTOM", doors[0]);
-    doors[1] = new Door((col-1)+","+row);
-    doorsHash.put("LEFT", doors[1]);
-    doors[2] = new Door((col+1)+","+(row));
-    doorsHash.put("RIGHT", doors[2]);
-    doors[3] = new Door(col+","+(row-1));
-    doorsHash.put("TOP", doors[3]);
+    if ((row+1)<=maxRow){
+      doors[0] = new Door(col+","+(row+1));
+      doorsHash.put("BOTTOM", doors[0]);}
+    if((col-1)>=0){
+      doors[1] = new Door((col-1)+","+row);
+      doorsHash.put("LEFT", doors[1]);}
+    if((col+1)<=maxCol){
+      doors[2] = new Door((col+1)+","+(row));
+      doorsHash.put("RIGHT", doors[2]);}
+    if((row-1)>=0){
+      doors[3] = new Door(col+","+(row-1));
+      doorsHash.put("TOP", doors[3]);}
   }
  
   public Door getDoor(String loc){
     return doorsHash.get(loc);
   }
  
+  public HashMap<String, Door> getDoorMap(){return doorsHash;}
+  
   public String getAvailableDoors(){
     String dr = "";
     for(Map.Entry<String, Door> entry : doorsHash.entrySet()){
+      
       String key = entry.getKey();
       String door = entry.getValue().toString();
       dr+=key+": "+door+"\n";
