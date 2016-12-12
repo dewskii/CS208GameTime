@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 //creates dungeon of rooms on a A-F,1-6 Grid
@@ -16,16 +17,20 @@ import javafx.stage.Stage;
 public class Dungeon {
 	Room currentRoom;
 	HashMap<String,Room> roomHash;
+	GridPane grid;
+	Player player;
 	
 	public Dungeon(){
 		roomHash = new HashMap<String,Room>();
 		initialize();
 		currentRoom = roomHash.get("START");
+		player = new Player("Player1",currentRoom);
 		
 	}
 	
-	public void changeRoom(String door){
-		currentRoom = roomHash.get(door);
+	public void changeRoom(Door door){
+		currentRoom = roomHash.get(door.name());
+		player.changeRoom(currentRoom);
 		
 	}
 	
@@ -38,28 +43,33 @@ public class Dungeon {
 	}
 	
 	//initializes rooms from text file, doors point to available rooms
+	
 	public void initialize(){
-		try{
-		Scanner sc = new Scanner(new File("src/mapData.txt"));
-		while(sc.hasNextLine()){
-			String[] st = sc.nextLine().split(" ");
-			boolean bol = Boolean.parseBoolean((String)st[0]);
-		    Room room = new Room(bol, st[1] /*new Image(new File(st[2]).toURI().toString())*/);
-		    Door[] doors = new Door[4];
-		    for(int i=0; i<doors.length; i++)
-		    	doors[i] = new Door(st[i+3]);
-		    room.setDoors(doors);
-		    if(room.isStart())
-		       roomHash.put("START", room);
-		    roomHash.put(room.getName(), room);
+		Room tempRoom;
+		Door[] door = new Door[4];
+		int row = 4;
+		int col = 4;
+		for(int i = 0; i<row; i++){
+			for(int j = 0; j<col; j++){
+				tempRoom = new Room(i+","+j);
+				roomHash.put(tempRoom.getName(), tempRoom);
+				for(int k = 0; k<door.length; k++){
+					if( i-1 > 0 
+				}
+				
+			}
+			
 		}
-		sc.close();
-		}
-		catch (Exception ex) {
-            ex.printStackTrace();
-        }
+		
+		
 		
 	}
+	
+	public GridPane getGrid(){
+		return grid;
+	}
+	
+	
 	
 	
 

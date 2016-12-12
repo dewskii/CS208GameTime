@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:controller="src.DungeonController" id="mainPane"  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane id="dungeonArea" fx:id="dungeonArea" layoutX="24.0" layoutY="30.0" prefHeight="345.0" prefWidth="334.0" style="-fx-background-color: GREY;" />
+      <Button id="top" fx:id="top" layoutX="441.0" layoutY="257.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" text="UP" />
+      <Button id="bottom" fx:id="down" layoutX="440.0" layoutY="311.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="66.0" text="DOWN" />
+      <Button id="left" fx:id="left" layoutX="383.0" layoutY="284.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="58.0" text="LEFT" />
+      <Button id="right" fx:id="right" layoutX="506.0" layoutY="284.0" mnemonicParsing="false" text="RIGHT" />
+      <TextArea id="textArea" fx:id="textArea" layoutX="373.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button id="attack" fx:id="attack" layoutX="373.0" layoutY="348.0" mnemonicParsing="false" text="Attack" />
+      <Button id="check" fx:id="check" layoutX="521.0" layoutY="348.0" mnemonicParsing="false" text="Check" />
+   </children>
+</Pane>

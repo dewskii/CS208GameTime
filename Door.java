@@ -12,7 +12,9 @@ public class Door {
 		this.roomID = roomID;
 		
 	}
-	
+	public String name() {
+		return roomID;
+	}
 	
 	@Override
 	public String toString(){
