@@ -24,13 +24,13 @@ public class Dungeon {
 		roomHash = new HashMap<String,Room>();
 		initialize();
 		currentRoom = roomHash.get("START");
-		player = new Player("Player1",currentRoom);
+		player = new Player("Player1",currentRoom.getName());
 		
 	}
 	
 	public void changeRoom(Door door){
 		currentRoom = roomHash.get(door.name());
-		player.changeRoom(currentRoom);
+		player.changeRoom(currentRoom.getName());
 		
 	}
 	
