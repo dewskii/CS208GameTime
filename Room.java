@@ -76,19 +76,31 @@ public class Room {
     return roomName;
   }
  
- 
+  public boolean hasPlayer(){
+    return !players.isEmpty();}
 
   public void addPlayer(Player p){
     players.add(p);
   }
   
   public void removePlayer(){
-    players.remove(0);
+    if (hasPlayer())
+      players.remove(0);
   }
   
   public Player getPlayer(){
-    return players.get(0);
+    if(hasPlayer())
+      return players.get(0);
+    else
+      return null;
   }
   
+  public String toString(){
+    String str = "Room: "+roomName+" Player: ";
+    if(getPlayer()==null)
+      return str+"none";
+    else
+      return str+getPlayer().getName();
+  }
   
 }

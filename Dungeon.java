@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Map;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
@@ -20,7 +21,10 @@ public class Dungeon {
  int rowNum;
  int colNum;
  GridPane grid;
- Player player;
+ Player player1;
+ Player player2;
+ Player player3;
+ Player currPlayer;
  
  public Dungeon(int rowNum, int colNum){
   roomHash = new HashMap<String,Room>();
@@ -33,7 +37,9 @@ public class Dungeon {
    }
   }
   currentRoom = roomHash.get("1,1");
-  //player = new Player("Player1", currentRoom.getName());
+  roomHash.get("0,"+(rowNum-1)).addPlayer(new Player("player1", "0,"+(rowNum-1)));
+  roomHash.get((colNum-1)+",0").addPlayer(new Player("player2",(colNum-1)+",0"));
+  roomHash.get("0,0").addPlayer(new Player("chaser","0,0"));
   
  }
  
@@ -41,9 +47,11 @@ public class Dungeon {
   String newRoom;
   if (currentRoom.getDoorMap().containsKey(key)){
     newRoom = currentRoom.getDoor(key).name();
-    currentRoom = roomHash.get(newRoom);}
-  //player.changeRoom(currentRoom.getName());
-  
+    if (currentRoom.hasPlayer()){
+      roomHash.get(newRoom).addPlayer(currentRoom.getPlayer());
+      currentRoom.removePlayer();}
+    currentRoom = roomHash.get(newRoom);
+  }
  }
  
  public HashMap<String, Room> getMap(){
@@ -58,23 +66,17 @@ public class Dungeon {
   return currentRoom.getName();
  }
  
- //initializes rooms from text file, doors point to available rooms
+ //public GridPane getGrid(){
+  //return grid;
+ //}
  
- public void initialize(){
-  Room tempRoom;
-  for(int i = 0; i<rowNum; i++){
-   for(int j = 0; j<colNum; j++){
-    tempRoom = new Room(i+","+j);
-    roomHash.put((i+","+j), new Room(i+","+j));
-   }
-  }
+ public String toString(){
+   String str = "";
+   for(Map.Entry<String, Room> entry : roomHash.entrySet()){
+     str+="["+entry.toString()+"]\n";}
+   return str;
  }
- 
- public GridPane getGrid(){
-  return grid;
- }
- 
- 
+   
  
  
 
