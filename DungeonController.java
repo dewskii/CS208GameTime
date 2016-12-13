@@ -7,13 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 public class DungeonController implements Initializable {
@@ -25,20 +19,25 @@ public class DungeonController implements Initializable {
 	@FXML private Button right;
 	@FXML private TextArea textArea;
 	@FXML private Button check;
-	private Dungeon dungeon;
+	@FXML private Button skip;
+	@FXML private TextField turnArea;
 	
 	@Override 
 	public void initialize(URL url, ResourceBundle rb){
 		Dungeon dungeon = new Dungeon();
-		dungeon.initialize();
+		dungeon.initialize(9,9);
 		dungeonArea.getChildren().add(dungeon.getGrid());
+	    turnArea.appendText("Turn: "+dungeon.getCurrentPlayer().getName());
 		top.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
 				Room temp = dungeon.getCurrentRoom();
 				if(temp.getDoor("TOP").getName() != null){
 					dungeon.changeRoom(temp.getDoor("TOP"));
 				    textArea.clear();
+				    turnArea.clear();
 				    textArea.appendText("Room change: "+dungeon.getRoomName());
+				    dungeon.changeTurn();
+				    turnArea.appendText("Turn: "+dungeon.getCurrentPlayer().getName());
 				}
 			    else {
 			    	 textArea.clear();
@@ -52,8 +51,11 @@ public class DungeonController implements Initializable {
 				Room temp = dungeon.getCurrentRoom();
 				if(temp.getDoor("BOTTOM").getName() != null){
 					dungeon.changeRoom(temp.getDoor("BOTTOM"));
-				    textArea.clear();
-				    textArea.appendText("Room change: "+dungeon.getRoomName());
+					 textArea.clear();
+					    turnArea.clear();
+					    textArea.appendText("Room change: "+dungeon.getRoomName());
+					    dungeon.changeTurn();
+					    turnArea.appendText("Turn: "+dungeon.getCurrentPlayer().getName());
 				}
 				else {
 			    	 textArea.clear();
@@ -68,8 +70,11 @@ public class DungeonController implements Initializable {
 				Room temp = dungeon.getCurrentRoom();
 				if(temp.getDoor("LEFT").getName() != null){
 					dungeon.changeRoom(temp.getDoor("LEFT"));
-				    textArea.clear();
-				    textArea.appendText("Room change: "+dungeon.getRoomName());
+					 textArea.clear();
+					    turnArea.clear();
+					    textArea.appendText("Room change: "+dungeon.getRoomName());
+					    dungeon.changeTurn();
+					    turnArea.appendText("Turn: "+dungeon.getCurrentPlayer().getName());
 				}
 				else {
 			    	 textArea.clear();
@@ -82,8 +87,11 @@ public class DungeonController implements Initializable {
 				Room temp = dungeon.getCurrentRoom();
 				if(temp.getDoor("RIGHT").getName() != null){
 					dungeon.changeRoom(temp.getDoor("RIGHT"));
-				    textArea.clear(); 
-				    textArea.appendText("Room change: "+dungeon.getRoomName());
+					 textArea.clear();
+					    turnArea.clear();
+					    textArea.appendText("Room change: "+dungeon.getRoomName());
+					    dungeon.changeTurn();
+					    turnArea.appendText("Turn: "+dungeon.getCurrentPlayer().getName());
 				}
 				else {
 			    	 textArea.clear();
@@ -98,7 +106,6 @@ public class DungeonController implements Initializable {
 				Room temp = dungeon.getCurrentRoom();
 				textArea.appendText("The Current Room is: "+temp.getName()+"\n");
 				textArea.appendText("The avalible doors are: \n"+temp.getAvalibleDoors());
-					
 			}
 				
 	});

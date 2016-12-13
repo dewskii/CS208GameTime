@@ -8,12 +8,10 @@ public class Player {
  private String name;
  private String currentRoom;
  private boolean alive;
- private boolean chaser;
- private boolean runner;
+
  
  public Player(String name){
   this.name = name;
-  this.currentRoom = currentRoom;
   alive = true;
  }
  
@@ -36,7 +34,7 @@ public class Player {
  /* changes the string variable for current room 
   * a new room
   * */
- public void changeRoom(String room){
+ public void setRoom(String room){
   this.currentRoom = room;
  }
  
