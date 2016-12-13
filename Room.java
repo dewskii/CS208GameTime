@@ -12,56 +12,62 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class Room {
   /*attributes*/
   private String roomName;
+  private int col;
+  private int row;
   private HashMap<String,Door> doorsHash;
  
   private ArrayList<Player> players;
   
-  private Rectangle roomRec;
-  
   public Room(){
     roomName = null;
-    roomRec = new Rectangle();
 
   }
  
   public Room(String roomName){
  
     this.roomName = roomName;
+    String[] token = roomName.split(",");
+    col = Integer.parseInt(token[0]);
+    row = Integer.parseInt(token[1]);
     this.doorsHash = new HashMap<String,Door>();
     players = new ArrayList<Player>();
-    roomRec = new Rectangle();
+    //setDoors();
    
   }//indices indicate position of doors [bottom,left,right,top]
  
-  public void setDoors(Door[] doors){
-	for(Door d: doors){
-		String[] raw = d.getName().split(",");
-		if(Integer.parseInt(raw[0]) < 0 || Integer.parseInt(raw[1]) < 0 || Integer.parseInt(raw[0]) > 8 || Integer.parseInt(raw[1]) > 8)
-			d.setName(null);
-	}
-    doorsHash.put("BOTTOM", doors[0]);
-    doorsHash.put("LEFT", doors[1]);
-    doorsHash.put("RIGHT", doors[2]);
-    doorsHash.put("TOP", doors[3]);
+ public void setDoors(int maxCol, int maxRow){
+    Door[] doors = new Door[4];
+    if ((row+1)<=maxRow){
+      doors[0] = new Door(col+","+(row+1));
+      doorsHash.put("BOTTOM", doors[0]);}
+    if((col-1)>=0){
+      doors[1] = new Door((col-1)+","+row);
+      doorsHash.put("LEFT", doors[1]);}
+    if((col+1)<=maxCol){
+      doors[2] = new Door((col+1)+","+(row));
+      doorsHash.put("RIGHT", doors[2]);}
+    if((row-1)>=0){
+      doors[3] = new Door(col+","+(row-1));
+      doorsHash.put("TOP", doors[3]);}
   }
  
   public Door getDoor(String loc){
     return doorsHash.get(loc);
   }
  
-  public String getAvalibleDoors(){
+  public HashMap<String, Door> getDoorMap(){return doorsHash;}
+  
+  public String getAvailableDoors(){
     String dr = "";
     for(Map.Entry<String, Door> entry : doorsHash.entrySet()){
-    if(entry.getValue().toString() != null){
+      
       String key = entry.getKey();
       String door = entry.getValue().toString();
       dr+=key+": "+door+"\n";
-    }
     }
     return dr;
   }
@@ -69,49 +75,32 @@ public class Room {
   public String getName(){
     return roomName;
   }
-  
-  public Rectangle getRoomShape(){
-	  return roomRec;
-  }
  
-  public void setRoom(){
-	  if( players.size() == 0)
-		  roomRec.setFill(Color.WHITE);
-	  else{
-		  for(Player p: players){
-			  if(p.getClass().getName().equals("Chaser"))
-				  roomRec.setFill(Color.RED);
-			  if(p.getClass().getName().equals("Runner"))
-				  roomRec.setFill(Color.DEEPSKYBLUE);
-		  }
-	  }
-	  
-  }
-  public void setRoom(double width, double height){
-	  roomRec.setWidth(width);
-	  roomRec.setHeight(height);
-	  setRoom();
-  }
- 
+  public boolean hasPlayer(){
+    return !players.isEmpty();}
 
   public void addPlayer(Player p){
     players.add(p);
-    setRoom();
-  }
-  
-  public void removePlayer(Player p){
-	  players.remove(p);
-	  setRoom();
   }
   
   public void removePlayer(){
-    players.remove(0);
-    setRoom();
+    if (hasPlayer())
+      players.remove(0);
   }
   
   public Player getPlayer(){
-    return players.get(0);
+    if(hasPlayer())
+      return players.get(0);
+    else
+      return null;
   }
   
+  public String toString(){
+    String str = "Room: "+roomName+" Player: ";
+    if(getPlayer()==null)
+      return str+"none";
+    else
+      return str+getPlayer().getName();
+  }
   
 }
