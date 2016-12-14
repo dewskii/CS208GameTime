@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 public class DungeonController implements Initializable {
+	/* JavaFX objects used in the main Scene
+	 * @FXML tag indicates the positioning and id match in the DungeonGame.fxml*/
 	@FXML
 	private Pane mainPane;
 	@FXML

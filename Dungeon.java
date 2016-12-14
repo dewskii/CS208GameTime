@@ -28,9 +28,9 @@ public class Dungeon {
 		players = new ArrayList<Player>();
 		player1 = new Chaser("Player1");
 		players.add(player1);
-		player2 = new Runner("Player2");
+		player2 = new Runner("Player2",1);
 		players.add(player2);
-		player3 = new Runner("Player3");
+		player3 = new Runner("Player3",2);
 		players.add(player3);
         hasWon = false;
 		turnFlag = 0;

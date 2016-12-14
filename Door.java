@@ -1,12 +1,6 @@
-import javafx.scene.image.Image;
-
 //Door for storing next room info, roomID will be used as key in hashmap of rooms
 public class Door {
 	String roomID;
-	boolean isLocked;
-	Image imageUnlocked;
-	Image imageLocked;
-	Image imageBlocked;
 
 	public Door(String roomID) {
 		this.roomID = roomID;
@@ -24,5 +18,11 @@ public class Door {
 	@Override
 	public String toString() {
 		return roomID;
+	}
+	@Override
+	public int hashCode(){
+		int hash = 0;
+		hash = 227*hash+(roomID !=null ? roomID.hashCode() : 0);
+		return hash;
 	}
 }

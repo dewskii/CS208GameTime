@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 // Tyler Pagliazzo, David Dew, Matthew Sedewitz
 /* Class that defines a player object
  * name holds the name of the player
@@ -60,5 +62,5 @@ public class Player {
 	public String toString() {
 		return "Name: " + name + "Current Room: " + currentRoom + "Is Alive: " + alive;
 	}
-
+	
 }

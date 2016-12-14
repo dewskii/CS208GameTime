@@ -15,7 +15,7 @@ public class Room {
 
 	private Rectangle roomRec;
 
-	final private Image chaserIMG = new Image("FXML/Skull.png");
+	
 
 	public Room() {
 		roomName = null;
@@ -74,12 +74,16 @@ public class Room {
 		else {
 			for (Player p : players) {
 				if (p.getClass().getName().equals("Chaser")) {
-					ImagePattern imageP = new ImagePattern(chaserIMG);
+					Chaser c = (Chaser) p;
+					ImagePattern imageP = new ImagePattern(c.getImage());
 					roomRec.setFill(imageP);
 				}
-				if (p.getClass().getName().equals("Runner"))
-					roomRec.setFill(Color.DEEPSKYBLUE);
+				if (p.getClass().getName().equals("Runner")){
+					Runner r = (Runner) p;
+					ImagePattern imageP = new ImagePattern(r.getImage());
+					roomRec.setFill(imageP);
 			}
+		 }
 		}
 	}
 
@@ -114,6 +118,13 @@ public class Room {
 	
 	public boolean isEmpty(){
 		return players.isEmpty();
+	}
+	
+	@Override
+	public int hashCode(){
+		int hash = 0;
+		hash = 227*hash+(roomName !=null ? roomName.hashCode() : 0);
+		return hash;
 	}
 
 }
