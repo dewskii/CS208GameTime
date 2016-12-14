@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import javafx.scene.layout.GridPane;
 
@@ -14,18 +15,21 @@ public class Dungeon {
 	HashMap<String, Room> roomHash;
 	GridPane grid;
 	ArrayList<Player> players;
+	Stack<Runner> runnersEscaped;
 	Player currentPlayer;
 	Chaser player1;
 	Runner player2;
 	Runner player3;
 	boolean hasWon;
-
+	boolean escapeFlag;
 	int turnFlag;
+	
 
 	public Dungeon() {
 		roomHash = new HashMap<String, Room>();
 		grid = new GridPane();
 		players = new ArrayList<Player>();
+		runnersEscaped = new Stack<Runner>();
 		player1 = new Chaser("Player1");
 		players.add(player1);
 		player2 = new Runner("Player2",1);
@@ -39,13 +43,26 @@ public class Dungeon {
 
 	public void changeRoom(Door door) {
 		if(roomHash.get(door.getName()).isEmpty()){
+		  if(roomHash.get(door.getName()).isExit() && currentPlayer.getClass().getName().equals("Runner")){
+				currentRoom.removePlayer(currentPlayer);
+				roomHash.get("Exit").addPlayer(currentPlayer);
+				currentPlayer.setRoom(roomHash.get("Exit").getName());
+				runnersEscaped.push((Runner)currentPlayer);
+				escapeFlag = true;
+				players.remove(currentPlayer);
+				changeTurn();
+			}
+		  else{
+	    escapeFlag = false;
 		currentRoom.removePlayer(currentPlayer);
 		currentRoom = roomHash.get(door.getName());
 		currentRoom.addPlayer(currentPlayer);
 		currentPlayer.setRoom(currentRoom.getName());
 		changeTurn();
+			}
 		}
 		else{
+			escapeFlag = false;
 			ArrayList<Player> temp = roomHash.get(door.getName()).getPlayers();
 			for(Player p : temp){
 				if(currentPlayer.getClass().getName().equals("Chaser") && p.getClass().getName().equals("Runner")){
@@ -88,6 +105,21 @@ public class Dungeon {
 		return currentRoom.getName();
 	}
 	
+	public Runner checkEscape(){
+		if(escapeFlag){
+			return runnersEscaped.peek();
+		}
+		else return null;
+	}
+	
+	public ArrayList<Player> getPlayers(){
+		return players;
+	}
+	
+	public Stack<Runner> getEscapees(){
+		return runnersEscaped;
+	}
+	
 	public boolean checkWin(){
 		if (players.size() == 1){
 			return hasWon = true;
@@ -116,6 +148,10 @@ public class Dungeon {
 				grid.add(tempRoom.getRoomShape(), c, r);
 			}
 		}
+		roomHash.get((row-1)+","+(col-1)).setExit();
+		roomHash.get((row-1)+","+(col-1)).setRoom();
+		roomHash.put("Exit", new Room("Exit"));
+		
 		currentRoom = roomHash.get((int) Math.floor(Math.random() * row) + "," + (int) Math.floor(Math.random() * col));
 		currentPlayer = player1;
 		currentRoom.addPlayer(player1);

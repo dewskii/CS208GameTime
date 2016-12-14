@@ -14,6 +14,8 @@ public class Room {
 	private ArrayList<Player> players;
 
 	private Rectangle roomRec;
+	
+	private boolean isExit;
 
 	
 
@@ -71,6 +73,9 @@ public class Room {
 	public void setRoom() {
 		if (players.size() == 0)
 			roomRec.setFill(Color.WHITE);
+		if(this.isExit){
+			roomRec.setFill(Color.AQUA);
+		}
 		else {
 			for (Player p : players) {
 				if (p.getClass().getName().equals("Chaser")) {
@@ -119,6 +124,15 @@ public class Room {
 	public boolean isEmpty(){
 		return players.isEmpty();
 	}
+	
+	public boolean isExit(){
+		return isExit;
+	}
+	
+	public void setExit(){
+		isExit = true;
+	}
+	
 	
 	@Override
 	public int hashCode(){

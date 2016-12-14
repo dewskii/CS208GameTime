@@ -40,6 +40,7 @@ public class DungeonController implements Initializable {
 		Dungeon dungeon = new Dungeon();
 		dungeon.initialize(9, 9);
 		dungeonArea.getChildren().add(dungeon.getGrid());
+		textArea.setWrapText(true);
 		turnArea.appendText("Turn: " + dungeon.getCurrentPlayer().getName());
 		textArea.appendText("You are " + dungeon.getCurrentPlayer().getName() + "\n");
 		textArea.appendText("The Current Room is: " + dungeon.getCurrentRoom().getName() + "\n");
@@ -50,13 +51,29 @@ public class DungeonController implements Initializable {
 				Room temp = dungeon.getCurrentRoom();
 				if (temp.getDoor("TOP").getName() != null) {
 					dungeon.changeRoom(temp.getDoor("TOP"));
+					if(dungeon.escapeFlag){
+						textArea.clear();
+						textArea.appendText(dungeon.checkEscape().getName()+" has escaped!");
+					}
+					else{
 					textArea.clear();
 					turnArea.clear();
 					textArea.appendText("Room change: " + dungeon.getRoomName());
 					turnArea.appendText("Turn: " + dungeon.getCurrentPlayer().getName());
+					}
 					if(dungeon.hasWon){
+						if(dungeon.getEscapees().isEmpty()){
 						textArea.clear();
-						textArea.appendText(dungeon.getCurrentPlayer().getName()+" has won!");
+						textArea.appendText("The Chaser has won!");
+						}
+						else if(dungeon.getEscapees().size() == 1){
+							textArea.clear();
+							textArea.appendText("Tie! Only "+dungeon.getEscapees().peek().getName()+" managed to escape");
+						}
+						else if(dungeon.getEscapees().size() == 2){
+							textArea.clear();
+							textArea.appendText("The Runners win!");
+						}
 					}
 				} else {
 					textArea.clear();
@@ -71,13 +88,29 @@ public class DungeonController implements Initializable {
 				Room temp = dungeon.getCurrentRoom();
 				if (temp.getDoor("BOTTOM").getName() != null) {
 					dungeon.changeRoom(temp.getDoor("BOTTOM"));
+					if(dungeon.escapeFlag){
+						textArea.clear();
+						textArea.appendText(dungeon.checkEscape().getName()+" has escaped!");
+					}
+					else{
 					textArea.clear();
 					turnArea.clear();
 					textArea.appendText("Room change: " + dungeon.getRoomName());
 					turnArea.appendText("Turn: " + dungeon.getCurrentPlayer().getName());
+					}
 					if(dungeon.hasWon){
+						if(dungeon.getEscapees().isEmpty()){
 						textArea.clear();
-						textArea.appendText(dungeon.getCurrentPlayer().getName()+" has won!");
+						textArea.appendText("The Chaser has won!");
+						}
+						else if(dungeon.getEscapees().size() == 1){
+							textArea.clear();
+							textArea.appendText("Tie! Only "+dungeon.getEscapees().peek().getName()+" managed to escape");
+						}
+						else if(dungeon.getEscapees().size() == 2){
+							textArea.clear();
+							textArea.appendText("The Runners win!");
+						}
 					}
 				}
 
@@ -95,13 +128,29 @@ public class DungeonController implements Initializable {
 				Room temp = dungeon.getCurrentRoom();
 				if (temp.getDoor("LEFT").getName() != null) {
 					dungeon.changeRoom(temp.getDoor("LEFT"));
+					if(dungeon.escapeFlag){
+						textArea.clear();
+						textArea.appendText(dungeon.checkEscape().getName()+" has escaped!");
+					}
+					else{
 					textArea.clear();
 					turnArea.clear();
 					textArea.appendText("Room change: " + dungeon.getRoomName());
 					turnArea.appendText("Turn: " + dungeon.getCurrentPlayer().getName());
+					}
 					if(dungeon.hasWon){
+						if(dungeon.getEscapees().isEmpty()){
 						textArea.clear();
-						textArea.appendText(dungeon.getCurrentPlayer().getName()+" has won!");
+						textArea.appendText("The Chaser has won!");
+						}
+						else if(dungeon.getEscapees().size() == 1){
+							textArea.clear();
+							textArea.appendText("Tie! Only "+dungeon.getEscapees().peek().getName()+" managed to escape");
+						}
+						else if(dungeon.getEscapees().size() == 2){
+							textArea.clear();
+							textArea.appendText("The Runners win!");
+						}
 					}
 				} else {
 					textArea.clear();
@@ -115,13 +164,29 @@ public class DungeonController implements Initializable {
 				Room temp = dungeon.getCurrentRoom();
 				if (temp.getDoor("RIGHT").getName() != null) {
 					dungeon.changeRoom(temp.getDoor("RIGHT"));
+					if(dungeon.escapeFlag){
+						textArea.clear();
+						textArea.appendText(dungeon.checkEscape().getName()+" has escaped!");
+					}
+					else{
 					textArea.clear();
 					turnArea.clear();
 					textArea.appendText("Room change: " + dungeon.getRoomName());
 					turnArea.appendText("Turn: " + dungeon.getCurrentPlayer().getName());
+					}
 					if(dungeon.hasWon){
+						if(dungeon.getEscapees().isEmpty()){
 						textArea.clear();
-						textArea.appendText(dungeon.getCurrentPlayer().getName()+" has won!");
+						textArea.appendText("The Chaser has won!");
+						}
+						else if(dungeon.getEscapees().size() == 1){
+							textArea.clear();
+							textArea.appendText("Tie! Only "+dungeon.getEscapees().peek().getName()+" managed to escape");
+						}
+						else if(dungeon.getEscapees().size() == 2){
+							textArea.clear();
+							textArea.appendText("The Runners win!");
+						}
 					}
 				} else {
 					textArea.clear();
