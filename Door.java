@@ -7,22 +7,22 @@ public class Door {
 	Image imageUnlocked;
 	Image imageLocked;
 	Image imageBlocked;
-	
-	public Door(String roomID){
+
+	public Door(String roomID) {
 		this.roomID = roomID;
-		
+
 	}
-	
-	public String setName(String name){
+
+	public String setName(String name) {
 		return roomID = name;
 	}
-	
+
 	public String getName() {
 		return roomID;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return roomID;
 	}
 }
